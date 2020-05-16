@@ -1,0 +1,10 @@
+@import "~bootstrap/scss/bootstrap";
+body {
+    background-color: lightcyan;
+}
+
+$theme-colors: (
+        "primary": #5bc0de,
+        "secondary": #f9f9f9,
+        "success": #8BC34A,
+);
