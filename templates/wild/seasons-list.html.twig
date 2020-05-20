@@ -2,28 +2,35 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ program_info.title }}{% endblock %}
 
-{% block body %}{{ dump(program_seasons) }}{{ dump(program_info) }}
+{% block body %}
 
     <main class="container">
         <h1>{{ program_info.title }}</h1>
         <div class="row row-cols-1 row-cols-md-3">
             {% for season in program_seasons %}
-                <div class="col mb-4">
+                <div class="col mb-4 mb-3">
                     <div class="card h-100">
                         <img src="{{ program_info.poster }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Saison {{ season.number }} | {{ season.year }}</h5>
                             <p class="card-text">{{ season.description }}</p>
                         </div>
+                        <a href="{{ path('show_season', { 'id': season.id }) }}"
+                           style="opacity: 0;"
+                           class="btn btn-primary stretched-link">
+                            En lire davantage
+                        </a>
                     </div>
                 </div>
             {% endfor %}
         </div>
 
-        <!-- Back to home -->
-        <a href="{{ path('wild_index') }}">
-            Retour à l'accueil
-        </a>
+        <div class="row">
+            <!-- Back to home -->
+            <a class="col-12" href="{{ path('wild_index') }}">
+                Retour à l'accueil
+            </a>
+        </div>
     </main>
 
 {% endblock %}

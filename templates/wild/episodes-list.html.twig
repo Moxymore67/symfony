@@ -1,0 +1,48 @@
+{# templates/wild/show.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}{{ program.title }}{% endblock %}
+
+{% block body %}
+
+    <main class="container p-3">
+        <h1>{{ program.title }} | Season {{ season.number }}</h1>
+        <p>{{ season.description }}</p>
+        <div class="row">
+            <div class="border mx-3 mb-3 p-3">
+                <div class="row px-3">
+                    <p class="col-12 px-3">Liste des épisodes :</p>
+                    <ul class="list-unstyled px-3">
+                        {% if episodes is empty %}
+                        Aucun épisode n'a été référencé pour cette saison
+                        {% else %}
+                            {% for episode in episodes %}
+                                <li class="mb-2">Episode {{ episode.number }} : {{ episode.title }}
+                                    <span>
+                                        <a class="mx-1" data-toggle="collapse" href="#ep-{{ episode.id }}"
+                                           role="button" aria-expanded="false" aria-controls="ep-{{ episode.id }}">
+                                            (lire le synopsis)
+                                        </a>
+                                        <div class="collapse" id="ep-{{ episode.id }}">
+                                            <div class="card card-body">
+                                                {{ episode.synopsis }}
+                                            </div>
+                                        </div>
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <!-- Back to referer -->
+            <a class="col-12" href="{{ app.request.server.get('HTTP_REFERER')|default('/') }}">
+                Retour à la liste des saisons de {{ program.title }}
+            </a>
+            <!-- Back to home -->
+            <a class="col-12" href="{{ path('wild_index') }}">
+                Retour à l'accueil
+            </a>
+        </div>
+    </main>
+
+{% endblock %}

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SeasonRepository", repositoryClass=SeasonRepository::class)
+ * @ORM\Entity(repositoryClass=SeasonRepository::class)
  */
 class Season
 {
@@ -35,7 +35,7 @@ class Season
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Program::class, inversedBy="season")
+     * @ORM\ManyToOne(targetEntity=Program::class, inversedBy="seasons")
      * @ORM\JoinColumn(nullable=false)
      */
     private $program;

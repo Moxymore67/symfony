@@ -137,7 +137,7 @@ class WildController extends AbstractController
                 'No seasons found for '.$programSlug.'.'
             );
         }
-        return $this->render('wild/program.html.twig', [
+        return $this->render('wild/seasons-list.html.twig', [
             'program_seasons' => $showSeasons,
             'program_info' => $programId,
         ]);
@@ -156,10 +156,6 @@ class WildController extends AbstractController
             throw $this
                 ->createNotFoundException('No season number has been sent to find a list in season\'s table.');
         }
-        if (!is_integer($id)) {
-            throw $this
-                ->createNotFoundException('Come on dude, we need an integer...');
-        }
         $seasonObj = $this->getDoctrine()
             ->getRepository(Season::class)
             ->find($id);
@@ -167,7 +163,7 @@ class WildController extends AbstractController
         $programs = $seasonObj->getProgram();
         $episodes = $seasonObj->getEpisodes();
 
-        return $this->render('wild/season.html.twig', [
+        return $this->render('wild/episodes-list.html.twig', [
             'season' => $seasonObj,
             'program' => $programs,
             'episodes' => $episodes,
