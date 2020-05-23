@@ -1,3 +1,6 @@
+-- Category
+INSERT INTO category VALUES (1, "Horreur");
+
 -- Programs
 insert into program (id, title, synopsis, poster, category_id, country, year) values (1, 'Walking Dead', 'Le policier Rick Grimes se réveille après un long coma. Il découvre avec effarement que le monde, ravagé par une épidémie, est envahi par les morts-vivants.', 'https://m.media-amazon.com/images/M/MV5BZmFlMTA0MmUtNWVmOC00ZmE1LWFmMDYtZTJhYjJhNGVjYTU5XkEyXkFqcGdeQXVyMTAzMDM4MjM0._V1_.jpg', 1, '', 0);
 insert into program (id, title, synopsis, poster, category_id, country, year) values (2, 'The Haunting Of Hill House', 'Plusieurs frères et sœurs qui, enfants, ont grandi dans la demeure qui allait devenir la maison hantée la plus célèbre des États-Unis, sont contraints de se réunir pour finalement affronter les fantômes de leur passé.', 'https://m.media-amazon.com/images/M/MV5BMTU4NzA4MDEwNF5BMl5BanBnXkFtZTgwMTQxODYzNjM@._V1_SY1000_CR0,0,674,1000_AL_.jpg', 1, '', 0);
