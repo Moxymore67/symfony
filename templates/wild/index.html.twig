@@ -4,6 +4,17 @@
 
 {% block body %}
     <h1>Toutes les séries de la table program : </h1>
+
+    {# Search form #}
+    {{ form_start(search_form) }}
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(search_form.searchField) }}
+                <button type="submit" name="btnSearch">Rechercher</button>
+            </div>
+        </div>
+    {{ form_end(search_form) }}
+
     {% for program in programs %}
         <div>
             <a href="{{ path('show_program', { 'programSlug': program.title }) }}">

@@ -6,9 +6,12 @@ use App\Entity\Category;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\ProgramSearchType;
+use App\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/wild")
@@ -20,7 +23,7 @@ class WildController extends AbstractController
      * @Route("/", name="wild_index")
      * @return Response
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $programs = $this->getDoctrine()
             ->getRepository(Program::class)
@@ -31,11 +34,22 @@ class WildController extends AbstractController
                 'No program found in program\'s table.'
             );
         }
-
-        return $this->render(
-            'wild/index.html.twig',
-            ['programs' => $programs]
+        // Search form
+        $searchForm = $this->createForm(
+            ProgramSearchType::class,
+            null,
+            ['method' => Request::METHOD_GET]
         );
+        $searchForm->handleRequest($request);
+        if ($searchForm->isSubmitted()) {
+            $data = $searchForm->getData();
+            return $this->showByCategory($data['searchField']);
+        }
+
+        return $this->render('wild/index.html.twig',[
+            'programs' => $programs,
+            'search_form' => $searchForm->createView(),
+        ]);
     }
 
     /**
