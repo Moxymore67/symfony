@@ -169,4 +169,16 @@ class WildController extends AbstractController
             'episodes' => $episodes,
         ]);
     }
+
+    /**
+     * Getting a unique episode
+     *
+     * @param int $episode
+     * @Route("episode/{id}", name="show_episode")
+     * @return Response
+     */
+    public function showEpisode(Episode $episode):Response
+    {
+        return $this->render('episode.html.twig', ['episode'=>$episode]);
+    }
 }
