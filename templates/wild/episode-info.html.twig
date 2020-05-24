@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{# Add a 0 before S and E in order to have something like S03E08 instead of S3E8 #}
+{% if season.number < 10 %}
+    {% set seasonNumber = 'S0'~ season.number %}
+{% else %}
+    {% set seasonNumber = 'S'~ season.number %}
+{% endif %}
+{% if episode.number < 10 %}
+    {% set episodeNumber = 'E0'~ episode.number %}
+{% else %}
+    {% set episodeNumber = 'E'~ episode.number %}
+{% endif %}
+
+{% block title %}
+    {{ program.title }} | {{ seasonNumber ~ episodeNumber }}
+{% endblock %}
+
+{% block body %}
+
+    <main class="container p-3">
+        <h1>{{ program.title }} | {{ seasonNumber ~ episodeNumber }}</h1>
+        <div class="row">
+            <div class="border mx-3 mb-3 p-3">
+                <ul>
+                    <li>Titre : {{ episode.title }}</li>
+                    <li>Saison : {{ season.number }}</li>
+                    <li>Episode : {{ episode.number }}</li>
+                    <li>Résumé : {{ episode.synopsis }}</li>
+                    <li>Année de sortie : {{ season.year }}</li>
+                </ul>
+            </div>
+            <!-- Back to program -->
+            <a class="col-12" href="{{ path('show_program', { 'programSlug': program.title }) }}">
+                Retour à la fiche détaillé de {{ program.title }}
+            </a>
+            <!-- Back to season details -->
+            <a class="col-12" href="{{ path('show_season', { 'id': season.id }) }}">
+                Retour à la fiche saison {{ season.number }} de {{ program.title }}
+            </a>
+            <!-- Back to home -->
+            <a class="col-12" href="{{ path('wild_index') }}">
+                Retour à l'accueil
+            </a>
+        </div>
+    </main>
+
+{% endblock %}

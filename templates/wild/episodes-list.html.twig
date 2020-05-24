@@ -28,15 +28,17 @@
                                             </div>
                                         </div>
                                     </span>
+                                    <span><a href="{{ path('show_episode', { 'id': episode.id }) }}">voir la
+                                            fiche épisode</a></span>
                                 </li>
                             {% endfor %}
                         {% endif %}
                     </ul>
                 </div>
             </div>
-            <!-- Back to referer -->
-            <a class="col-12" href="{{ app.request.server.get('HTTP_REFERER')|default('/') }}">
-                Retour à la liste des saisons de {{ program.title }}
+            <!-- Back to program -->
+            <a class="col-12" href="{{ path('show_program', { 'programSlug': program.title }) }}">
+                Retour à la fiche détaillé de {{ program.title }}
             </a>
             <!-- Back to home -->
             <a class="col-12" href="{{ path('wild_index') }}">
