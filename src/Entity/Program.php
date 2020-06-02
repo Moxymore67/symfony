@@ -33,7 +33,7 @@ class Program
     /**
      * @ORM\Column(type="text")
      * @assert\NotBlank(message="La valeur de ce champ ne peut être vide.")
-     * @Assert\Regex(
+     * @assert\Regex(
      *     pattern="/(plus belle la vie)/i",
      *     match=false,
      *     message="On parle de vraies séries ici !"
