@@ -11,6 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class CategoryType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name');
