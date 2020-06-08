@@ -23,6 +23,12 @@
                 </h2>
             </a>
             <p>{{ program.synopsis }}</p>
+            <ul>
+                Acteurs :
+                {% for actor in program.actors %}
+                    <li>{{ actor.name }}</li>
+                {% endfor %}
+            </ul>
         </div>
     {% else %}
         Aucune série trouvée.
