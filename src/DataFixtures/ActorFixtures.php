@@ -6,13 +6,10 @@ use App\Entity\Actor;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Faker;
 
 class ActorFixtures extends Fixture implements DependentFixtureInterface
 {
-    const ACTORS = [
-        'Andrew Lincoln', 'Norman Reedus', 'Lauren Cohan', 'Danai Gurira',
-    ];
-
     public function getDependencies()
     {
         return [ProgramFixtures::class];
@@ -20,13 +17,28 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        $i = 0;
-        foreach (self::ACTORS as $key => $name) {
+        $faker = Faker\Factory::create('fr_FR');
+        for($i=0; $i<=50; $i++) {
             $actor = new Actor();
-            $actor->setName($name);
+            $actor->setName($faker->name);
+            if($i <= 12) {
+                $actor->addProgram($this->getReference('program_0'));
+            } elseif ( 13 <= $i && $i <= 25) {
+                $actor->addProgram($this->getReference('program_1'));
+            } elseif ( 26 <= $i && $i <= 35) {
+                $actor->addProgram($this->getReference('program_2'));
+            } elseif ( 36 <= $i && $i <= 42) {
+                $actor->addProgram($this->getReference('program_3'));
+            } elseif ( 43 <= $i && $i <= 46) {
+                $actor->addProgram($this->getReference('program_4'));
+            } elseif ( 47 <= $i && $i <= 50) {
+                $actor->addProgram($this->getReference('program_5'));
+            }
+
             $manager->persist($actor);
-            $i++;
+            $this->addReference('actor_' . $i, $actor);
         }
+
         $manager->flush();
     }
 }
