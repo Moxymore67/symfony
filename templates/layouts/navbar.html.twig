@@ -15,6 +15,12 @@
             <a class="nav-item nav-link" href="/season/">CRUD Season</a>
             <a class="nav-item nav-link" href="/episode/">CRUD Episode</a>
             <a class="nav-item nav-link" href="/actor/">CRUD Acteur</a>
+            {% if app.user %}
+                <a class="nav-item nav-link" href="">{{ app.user.email }}</a>
+                <a class="nav-item nav-link" href="{{ path('app_logout') }}"> Se déconnecter</a>
+            {% else %}
+                <a class="nav-item nav-link" href="{{ path('app_login') }}"> Se connecter</a>
+            {% endif %}
         </div>
     </div>
 </nav>
