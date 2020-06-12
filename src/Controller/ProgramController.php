@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Program;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
+use App\Service\MailSender;
 use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +30,7 @@ class ProgramController extends AbstractController
     /**
      * @Route("/new", name="program_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Slugify $slugify): Response
+    public function new(Request $request, Slugify $slugify, MailSender $mailSender): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -41,6 +42,15 @@ class ProgramController extends AbstractController
             $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
+
+            // Send an email each time a new program is added to the db
+            $html = $this->renderView('mail-campaigns/program.html.twig', [
+                'program' => $program,
+                'url' => $this->generateUrl('program_show', [
+                    'slug' => $program->getSlug(),
+                ]),
+            ]);
+            $mailSender->send($html);
 
             return $this->redirectToRoute('program_index');
         }
