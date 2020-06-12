@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\CommentType;
 use App\Form\ProgramSearchType;
 use App\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -189,11 +191,20 @@ class WildController extends AbstractController
      * Getting a unique episode
      *
      * @param Episode $episode
-     * @Route("/episode/{id}", name="show_episode")
+     * @Route("/episode/{id}", name="show_episode", methods={"GET","POST"})
      * @return Response
      */
-    public function showEpisode(Episode $episode):Response
+    public function showEpisode(Episode $episode, Request $request):Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        //
+        $allComments = $this->getDoctrine()
+            ->getRepository(Comment::class)
+            ->findBy(['episode' => $episode]);
+
         if (!$episode) {
             throw $this
                 ->createNotFoundException('No episode has been sent to find a list in episode\'s table.');
@@ -201,10 +212,30 @@ class WildController extends AbstractController
         $season = $episode->getSeason();
         $program = $season->getProgram();
 
+        // Comment form
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $comment->setAuthor($this->getUser());
+            $comment->setEpisode($episode);
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $episodeId = $episode->getId();
+
+            return $this->redirectToRoute('show_episode', [
+                'id' => $episodeId,
+            ]);
+        }
+
         return $this->render('wild/episode-info.html.twig', [
             'episode' => $episode,
             'season' => $season,
             'program' => $program,
+            'form' => $form->createView(),
+            'comments' => $allComments
         ]);
     }
 }

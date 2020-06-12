@@ -30,6 +30,27 @@
                     <li>Année de sortie : {{ season.year }}</li>
                 </ul>
             </div>
+
+            <h2 class="col-12 text-center">Commentaires</h2>
+            {% for comment in comments %}
+                <div class="bg-light col-8 mx-auto my-3 border">
+                    <p>Commentaire #{{ comment.id }} - {{ comment.author.username }}</p>
+                    <p>{{ comment.comment }}</p>
+                    <p>{{ comment.rate }}</p>
+                </div>
+            {% endfor %}
+
+            {% if app.user %}
+
+                    <h2 class="text-center col-12">Ajouter un commentaire sur l'épisode</h2>
+                    <div class="col-8 mx-auto">
+                        {{ include('comment/_form.html.twig') }}
+                    </div>
+
+            {% else %}
+                <p>Vous devez vous <a href="{{ path('app_login') }}">connecter</a> pour laisser un commentaire.</p>
+            {% endif %}
+
             <!-- Back to program -->
             <a class="col-12" href="{{ path('show_program', { 'programSlug': program.title }) }}">
                 Retour à la fiche détaillé de {{ program.title }}
