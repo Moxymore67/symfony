@@ -16,10 +16,24 @@
             <a class="nav-item nav-link" href="/episode/">CRUD Episode</a>
             <a class="nav-item nav-link" href="/actor/">CRUD Acteur</a>
             {% if app.user %}
-                <a class="nav-item nav-link" href="">{{ app.user.email }}</a>
-                <a class="nav-item nav-link" href="{{ path('app_logout') }}"> Se déconnecter</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false">Mon compte</a>
+                    <div class="dropdown-menu">
+                        <a class="nav-item nav-link" href="{{ path('wild_profile') }}"> Mon profil</a>
+                        <a class="nav-item nav-link" href="{{ path('app_logout') }}"> Se déconnecter</a>
+                    </div>
+                </li>
+
             {% else %}
-                <a class="nav-item nav-link" href="{{ path('app_login') }}"> Se connecter</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false">Mon compte</a>
+                    <div class="dropdown-menu">
+                        <a class="nav-item nav-link" href="{{ path('app_login') }}">Connexion</a>
+                        <a class="nav-item nav-link" href="{{ path('app_register') }}">Inscription</a>
+                    </div>
+                </li>
             {% endif %}
         </div>
     </div>

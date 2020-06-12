@@ -238,4 +238,13 @@ class WildController extends AbstractController
             'comments' => $allComments
         ]);
     }
+
+    /**
+    * @Route("/profil", name="wild_profile")
+    * @return Response
+    */
+    public function profile(Request $request): Response
+    {
+        return $this->render('security/profile.html.twig');
+    }
 }
