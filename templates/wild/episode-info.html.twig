@@ -37,10 +37,13 @@
                     <p>Commentaire #{{ comment.id }} - {{ comment.author.username }}</p>
                     <p>{{ comment.comment }}</p>
                     <p>{{ comment.rate }}</p>
+                    {% if is_granted('ROLE_SUBSCRIBER') and comment.author.username == app.user.username %}
+                        <button class="btn btn-warning">Supprimer le commentaire</button>
+                    {% endif %}
                 </div>
             {% endfor %}
 
-            {% if app.user %}
+            {% if is_granted('ROLE_SUBSCRIBER') %}
 
                     <h2 class="text-center col-12">Ajouter un commentaire sur l'épisode</h2>
                     <div class="col-8 mx-auto">
