@@ -26,7 +26,7 @@
             <ul>
                 Acteurs :
                 {% for actor in program.actors %}
-                    <li>{{ actor.name }}</li>
+                    <li>{{ actor.name }} {{ actor.lastname }}</li>
                 {% endfor %}
             </ul>
             {% if is_granted('ROLE_ADMIN') %}
