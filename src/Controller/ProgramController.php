@@ -45,6 +45,8 @@ class ProgramController extends AbstractController
             $entityManager->persist($program);
             $entityManager->flush();
 
+            $this->addFlash('success', 'The new program has been created !');
+
             // Send an email each time a new program is added to the db
             $html = $this->renderView('mail-campaigns/program.html.twig', [
                 'program' => $program,
@@ -87,6 +89,8 @@ class ProgramController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'The program has been edited !');
+
             return $this->redirectToRoute('program_index');
         }
 
@@ -105,6 +109,8 @@ class ProgramController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($program);
             $entityManager->flush();
+
+            $this->addFlash('danger', 'The program has been removed !');
         }
 
         return $this->redirectToRoute('program_index');
